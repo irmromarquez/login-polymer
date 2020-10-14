@@ -17,7 +17,7 @@ class LoginInput extends PolymerElement {
           display: block;
         }
       </style>
-      <paper-input label$="[[title]]" type="[[type]]"></paper-input>
+      <paper-input label="[[title]]" type="[[type]]"></paper-input>
     `;
   }
   static get properties() {
