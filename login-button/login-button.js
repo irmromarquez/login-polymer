@@ -59,6 +59,14 @@ class LoginButton extends PolymerElement {
       },
     };
   }
+  ready() {
+    super.ready();
+    this.addEventListener('click', this._onClick);
+   }
+    
+  _onClick(event) {
+    this.dispatchEvent(new CustomEvent('login-button-click', {detail: event}));
+  }
 }
 
 window.customElements.define('login-button', LoginButton);
