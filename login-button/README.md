@@ -9,9 +9,6 @@
 *
 * - `login-button-click`: Fired when you click on one button for selection.
 *
-* ## Icons
-*
-*
 * ## Styling
 *
 * The following custom properties and mixins are available for styling:
