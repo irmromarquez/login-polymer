@@ -63,9 +63,17 @@ class LoginButton extends PolymerElement {
     super.ready();
     this.addEventListener('click', this._onClick);
    }
-    
+  
+   /**
+    * Fired when you click on the button
+    * @event login-button-click
+    */
   _onClick(event) {
-    this.dispatchEvent(new CustomEvent('login-button-click', {detail: event}));
+    this.dispatchEvent(new CustomEvent(`${ login-button.is }-click`, {
+      bubbles: true,
+      composed: true,
+      detail: event
+    }));
   }
 }
 
