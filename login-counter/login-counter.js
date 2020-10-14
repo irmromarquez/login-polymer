@@ -1,13 +1,5 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 
-/**
- * `login-counter`
- * record the time of the user&#39;s last connection
- *
- * @customElement
- * @polymer
- * @demo demo/index.html
- */
 class LoginCounter extends PolymerElement {
   static get template() {
     return html`
@@ -21,23 +13,23 @@ class LoginCounter extends PolymerElement {
           flex-wrap:wrap;
           justify-content: center;
         }
-        .login-counter {
+        .login-content {
           display: flex;
           font-size: var(--login-counter-size,4em);
           color: var(--login-counter-color,#CBC4C3);
           justify-content: center;
-          width: var(--login-counter-counter-with,100%);
+          width: var(--login-counter-counter-width,100%);
         }
         .login-title {
           display: flex;
-          width: var(--login-counter-title-with,100%);
+          width: var(--login-title-with,100%);
           justify-content: center;
           color: var(--login-title-color,#CBC4C3);
           font-size: var(--login-title-size,1.5em);
         }
       </style>
       <div class="login-countainer">
-        <div class="login-counter">[[counter]]</div>
+        <div class="login-content">[[counter]]</div>
         <div class="login-title">[[text]]</div>
       </div>
     `;
