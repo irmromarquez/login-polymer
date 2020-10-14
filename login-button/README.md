@@ -1,7 +1,6 @@
 * Example:
-*
 * ```html
-* <login-button title="login in"></login-button>
+* `<login-button title="login in"></login-button>`
 * ```
 * ## Properties
 *
