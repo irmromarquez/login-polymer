@@ -55,7 +55,7 @@ class LoginButton extends PolymerElement {
     return {
       title: {
         type: String,
-        value: 'login in',
+        value: '',
       },
     };
   }
