@@ -93,36 +93,7 @@ class AppWeb extends PolymerElement {
       },
       users: {
         type: Object,
-        value: [{
-            "id": 1,
-            "email": "1@1.es",
-            "password": "1"
-        },
-        {
-            "id": 2,
-            "email": "pepe@gmail.com",
-            "password": "1234"
-        },
-        {
-            "id": 3,
-            "email": "arturo@gmail.com",
-            "password": "0000"
-        },
-        {
-            "id": 4,
-            "email": "victor@gmail.com",
-            "password": "78945"
-        },
-        {
-            "id": 5,
-            "email": "ruben@gmail.com",
-            "password": "95687"
-        },
-        {
-            "id": 6,
-            "email": "javi@gmail.com",
-            "password": "7548"
-        }]
+        value: ''
       }
     };
   }
@@ -133,32 +104,43 @@ class AppWeb extends PolymerElement {
     this.addEventListener('app-button-logout', this._logoutPage)
   }
   _validateUser() {
-    if(this.email || this.password) {
-      var validate = false;
-      this.showError = false;
-      for(var i=0; i < this.users.length;i++) {
-        if(this.users[i].email == this.email && this.users[i].password == this.password) {
-          validate = true;
-        }
-      }
-      if(validate) {
-        // limpio los campos antes de cambiar de pagina
-        this.email = '';
-        this.password = '';
-        this.nextPage = true;
-        this.set('route.path', 'welcome');
-      } else {
-        if (this.email != "" && this.password != "") {
-          this.errorText = this.errorText;
-          this.showError = true;
-        }
+    // simula la llamda al servidor y se obtendría un true o false para pasar a la siguiente pagina.
+    // en este caso lo que hago es obtener un mock, compruebo si existe el usuario y cambio de página.
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        document.getElementsByTagName('app-web')[0].users = JSON.parse(xmlhttp.responseText);
+        document.getElementsByTagName('app-web')[0]._checkUser();
+      } 
+    }
+    xmlhttp.open("GET","src/mock/users.json");
+    xmlhttp.send();
+  }
+  _checkUser() {
+    var validate = false;
+    for(var i=0; i < this.users.length;i++) {
+      if(this.users[i].email == this.email && this.users[i].password == this.password) {
+        validate = true;
       }
     }
-  }
+    if(validate) {
+      // limpio los campos antes de cambiar de pagina
+      this.email = '';
+      this.password = '';
+      this.nextPage = true;
+      this.set('route.path', 'welcome');
+    } else {
+      if (this.email != "" && this.password != "") {
+        this.errorText = this.errorText;
+        this.showError = true;
+      }
+    }
+}
   _logoutPage(event) {
     if(event.detail.logout) {
         this.nextPage = false;
         this.set('route.path', 'login');
+        this.showError = false;
     }
   }
 }
