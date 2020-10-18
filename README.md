@@ -1,33 +1,29 @@
 # \<app-web\>
 
+## Es necesario tener las siguientes aplicaciones:
 
+# 1.Instalar NPM
 
-## Install the Polymer-CLI
+https://nodejs.org/es/download/
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
-
-## Viewing Your Application
-
-```
-$ polymer serve
-```
-
-## Building Your Application
+# 2.Instalar Polymer-CLI
 
 ```
-$ polymer build
+npm install -g polymer-cli
 ```
 
-This will create builds of your application in the `build/` directory, optimized to be served in production. You can then serve the built versions by giving `polymer serve` a folder to serve from:
+
+## Iniciar la aplicacion (dentro del carpeta del proyecto)
+
+Ejecutar el siguiente comando por consola: $ polymer serve -o
+Esto te generará un servidor local para poder visualizar la aplicación.
+
+## Construcción de la aplicación
+
+Ejecutar el siguiente comando por consola: $ polymer build
+
+Esto creará compilaciones de su aplicación en el directorio `build /`, optimizado para ser servido en producción. A continuación, puede servir las versiones construidas dando a `polymer serve` una carpeta para servir desde: 
 
 ```
 $ polymer serve build/default
 ```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally. [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) is required. Note that if you do not have the `javac` command installed, you will be promted to install Java 10. To uninstall Java, see the direction [here](https://www.java.com/en/download/help/mac_uninstall_java.xml). See [issue #405 for the status of Java 10 support](https://github.com/Polymer/tools/issues/405).
