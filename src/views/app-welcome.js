@@ -30,9 +30,6 @@ class AppWelcome extends PolymerElement {
         .app-title {
             padding: 66px;
         }
-        paper-card {
-            margin-bottom:40px;
-        }
         .actions {
             display: flex;
             width: 100%;
