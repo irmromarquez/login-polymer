@@ -6,7 +6,7 @@ import '@polymer/paper-card/paper-card.js';
 import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-input/paper-input.js';
-import '../components/app-button.js';
+import '../components/app-button/app-button.js';
 import '../views/app-welcome.js';
 import '../services/app-service-users.js'
 
@@ -56,27 +56,23 @@ class AppWeb extends PolymerElement {
       <iron-pages selected="[[data.page]]" attr-for-selected="page">
         <paper-card page="login">
           <iron-icon icon="lock-outline"></iron-icon>
-          <div class="errors-messages" hidden$="{{!showError}}">{{errorText}}</div>
+          <div class="errors-messages" hidden$="{{!showError}}">[[errorText]]</div>
           <div class="card-content">
-            <paper-input label="Email" Value="{{email}}"></paper-input>
-            <paper-input label="Password" Value="{{password}}"></paper-input>
+            <paper-input type="email" label="Email" value="{{email}}"></paper-input>
+            <paper-input type="password" label="Password" value="{{password}}"></paper-input>
           </div>
           <div class="card-actions">
-            <app-button id="btn-login" title="login"></app-button>
+            <app-button id="btn-login" title="login" on-app-button-click="_validateUser"></app-button>
           </div>
         </paper-card>
-        <app-welcome page="welcome" selected="{{nextPage}}"></app-welcome>
+        <app-welcome page="welcome" is-welcome-page="{{showWelcomePage}}" on-app-button-logout="_logoutPage"></app-welcome>
       </iron-pages>
-      <app-service-users params="{{params}}" call-request="{{call}}" url="{{url}}" type-request="{{typeRequest}}"></app-service-users>
+      <app-service-users params="{{params}}" call-request="{{call}}" url="{{url}}" type-request="{{typeRequest}}" on-app-service-users-request="_checkUser"></app-service-users>
 
     `;
   }
   static get properties() {
     return {
-      login : {
-        type: Boolean,
-        value: false
-      },
       errorText: {
         type: String,
         value: 'Usuario o contraseña incorrecta'
@@ -89,7 +85,7 @@ class AppWeb extends PolymerElement {
         type: String,
         value: ''
       },
-      nextPage: {
+      showWelcomePage : {
         type: Boolean,
         value: false,
       },
@@ -119,22 +115,19 @@ class AppWeb extends PolymerElement {
   ready() {
     super.ready();
     this.set('route.path', 'login');
-    this.addEventListener('app-button-click', this._validateUser);
-    this.addEventListener('app-button-logout', this._logoutPage);
-    this.addEventListener('app-service-users-request',this._checkUser);
   }
   _validateUser(evt) {
      this.params.email = this.email;
      this.params.password = this.password;
-     if(evt.path[0].id == 'btn-login') {
+     if(evt.path[0].id === 'btn-login') {
       this.call = true;
      }
   }
   _checkUser(evt) {
     this.call = false;
     if (evt.detail.isValidate) {
-      sessionStorage.setItem("id",evt.detail.id);
-      this.nextPage = true;
+      sessionStorage.setItem('id',evt.detail.id);
+      this.showWelcomePage = true;
       this.set('route.path', 'welcome');
       this.email = '';
       this.password = '';
@@ -144,7 +137,7 @@ class AppWeb extends PolymerElement {
   }
   _logoutPage(event) {
     if(event.detail.logout) {
-        this.nextPage = false;
+        this.showWelcomePage = false;
         this.set('route.path', 'login');
         this.showError = false;
     }

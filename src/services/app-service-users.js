@@ -15,10 +15,6 @@ class appServiceUsers extends PolymerElement {
         value: false,
         observer: '_sendRequest'
       },
-      users: {
-        type: Object,
-        value: ''
-      },
       params: {
         type: Object,
         value: ''
@@ -38,50 +34,43 @@ class appServiceUsers extends PolymerElement {
     * @event app-button-click
     */
    _sendRequest() {
-     console.log("pasa por aki");
       if(this.callRequest) {
         // se vuelve a poner a false para la siguiente llamada
         this.callRequest = false;
         // simula la llamda al servidor y se obtendría un true o false para pasar a la siguiente pagina.
         // en este caso lo que hago es obtener un mock, compruebo si existe el usuario y cambio de página.
-        var xmlhttp = this._getxHRequest();
-        var validate = false;
-        var params = this.params;
-        var element = this;
-        var idUser = '';
+        const xmlhttp = this._getxHRequest();
+        const params = this.params;
+        let findUser;
         xmlhttp.onreadystatechange = function() {
-          if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var users = JSON.parse(xmlhttp.responseText);
-            var objParams = params; 
-            for(var i=0; i < users.length;i++) {
-              if(users[i].email == objParams.email && users[i].password == objParams.password) {
-                validate = true;
-                idUser = users[i].id;
-               
-              }
-            }
-            element.dispatchEvent(new CustomEvent("app-service-users-request", {
-              bubbles: true,
-              composed: true,
-              detail: {isValidate:validate,id:idUser}
-            }));
-            
-          } 
-        }
+          if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            const users = JSON.parse(xmlhttp.responseText);
+            const objParams = params; 
+
+            findUser = users.find((item)=>{
+              return item.email === objParams.email && item.password === objParams.password;
+            });
+          }
+          this.dispatchEvent(new CustomEvent('app-service-users-request', {
+            bubbles: true,
+            composed: true,
+            detail: {isValidate: Boolean(findUser),id:findUser ? findUser.id : ''}
+          }));
+        }.bind(this);
         xmlhttp.open(this.typeRequest,this.url);
         xmlhttp.send();
       }
     }
     _getxHRequest() {
-        var xHRequest;
+        let xHRequest;
         try {
             xHRequest = new XMLHttpRequest();
         } catch (trymicrosoft) {
             try {
-                xHRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                xHRequest = new ActiveXObject('Msxml2.XMLHTTP');
             } catch (othermicrosoft) {
                 try {
-                    xHRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    xHRequest = new ActiveXObject('Microsoft.XMLHTTP');
                 } catch (failed) {
                     xHRequest = false;
                 }

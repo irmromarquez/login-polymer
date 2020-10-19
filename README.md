@@ -15,12 +15,16 @@ npm install -g polymer-cli
 
 ## Iniciar la aplicacion (dentro del carpeta del proyecto)
 
-Ejecutar el siguiente comando por consola: $ polymer serve -o
+Ejecutar los siguientes comandos por consola: 
+```
+$ npm install
+$ polymer serve -o
+```
 Esto te generará un servidor local para poder visualizar la aplicación.
 
 ## Construcción de la aplicación
 
-Ejecutar el siguiente comando por consola: $ polymer build
+Ejecutar el siguiente comando por consola: `$ polymer build`
 
 Esto creará compilaciones de su aplicación en el directorio `build /`, optimizado para ser servido en producción. A continuación, puede servir las versiones construidas dando a `polymer serve` una carpeta para servir desde: 
 

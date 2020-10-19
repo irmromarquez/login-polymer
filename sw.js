@@ -1,5 +1,4 @@
 self.addEventListener('install', function(event) {
-    // Instalar de inmediato
     if (self.skipWaiting) { self.skipWaiting(); }
       event.waitUntil(
         caches.open('cache01').then(function(cache) {
@@ -11,7 +10,6 @@ self.addEventListener('install', function(event) {
         })
       );
     });
-    // Cache, falling back to network
     self.addEventListener('fetch', function(event) {
       event.respondWith(
         caches.match(event.request).then(function(response) {
@@ -19,7 +17,6 @@ self.addEventListener('install', function(event) {
         })
       );
     });
-     // Elimina archivos de cache viejos
       var cacheWhitelist = ['cache01'];
         caches.keys().then(function(cacheNames) {
           return Promise.all(
@@ -31,6 +28,5 @@ self.addEventListener('install', function(event) {
           );
         });
         caches.keys().then(function(cacheKeys) {
-        // Muestra en la consola la cache instalada 
         console.log('Versión SW: '+cacheKeys);
     });

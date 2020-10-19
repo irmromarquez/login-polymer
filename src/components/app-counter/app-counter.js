@@ -7,20 +7,20 @@ class appCounter extends PolymerElement {
         :host {
           display: block;
         }
-        .login-countainer {
+        .login-counter-countainer {
           display: flex;
           width: var(--login-counter-countainer-with,100%);
           flex-wrap:wrap;
           justify-content: center;
         }
-        .login-content {
+        .login-counter-content {
           display: flex;
           font-size: var(--login-counter-size,4em);
           color: var(--login-counter-color,#CBC4C3);
           justify-content: center;
           width: var(--login-counter-counter-width,100%);
         }
-        .login-title {
+        .login-counter-title {
           display: flex;
           width: var(--login-title-with,100%);
           justify-content: center;
@@ -28,9 +28,9 @@ class appCounter extends PolymerElement {
           font-size: var(--login-title-size,1.5em);
         }
       </style>
-      <div class="login-countainer">
-        <div class="login-content">[[counter]]</div>
-        <div class="login-title">[[text]]</div>
+      <div class="login-counter-countainer">
+        <div class="login-counter-content">[[counter]]</div>
+        <div class="login-counter-title">[[text]]</div>
       </div>
     `;
   }
@@ -42,7 +42,7 @@ class appCounter extends PolymerElement {
       },
       text: {
         type: String,
-        value: ""
+        value: ''
       }
     };
   }

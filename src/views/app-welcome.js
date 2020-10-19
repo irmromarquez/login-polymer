@@ -1,8 +1,8 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-card/paper-card.js';
-import '../components/app-button.js';
-import '../components/app-counter.js';
-import '../components/app-title.js';
+import '../components/app-button/app-button.js';
+import '../components/app-counter/app-counter.js';
+import '../components/app-title/app-title.js';
 
 /**
  * @customElement
@@ -46,7 +46,7 @@ class AppWelcome extends PolymerElement {
             <app-counter counter="{{seconds}}" text="seconds"></app-counter>
         </div>
         <div class="actions">
-            <app-button id="button-welcome" class="app-button" title="logout"></app-button>
+            <app-button id="button-welcome" class="app-button" title="logout" on-app-button-click="_logout"></app-button>
         </div>
       </paper-card>
       
@@ -70,7 +70,7 @@ class AppWelcome extends PolymerElement {
         type: String,
         value: ''
       },
-      selected: {
+      isWelcomePage: {
         type: Boolean,
         value: false,
         observer: '_loadCounters'
@@ -79,24 +79,23 @@ class AppWelcome extends PolymerElement {
   }
   ready() {
     super.ready();
-    this.addEventListener('app-button-click', this._logout);
   }
 
   _loadCounters() {
-    if (this.selected) {
-      if(typeof(localStorage.getItem(sessionStorage.getItem("id")))=='object') {
-        localStorage.setItem(sessionStorage.getItem("id"), new Date());
+    if (this.isWelcomePage) {
+      if(!localStorage.getItem(sessionStorage.getItem('id'))) {
+        localStorage.setItem(sessionStorage.getItem('id'), new Date());
       }
-  
-      var conexionDate = new Date(localStorage.getItem(sessionStorage.getItem("id")));
-      var currentDate =  new Date();
+      
+      const conexionDate = new Date(localStorage.getItem(sessionStorage.getItem('id')));
+      const currentDate =  new Date();
        
-      var diffMs = (currentDate - conexionDate);
-      var diffTime = Math.abs(currentDate.getTime () - conexionDate.getTime ());
+      const diffMs = (currentDate - conexionDate);
+      const diffTime = Math.abs(currentDate.getTime() - conexionDate.getTime());
      
-      var days = parseInt((diffMs / (1000 * 3600 * 24)));
-      var diffHrs =  parseInt(Math.floor((diffMs % 86400000) / 3600000)); 
-      var minutes =  parseInt(Math.round(((diffMs % 86400000) % 3600000) / 60000));
+      const days = parseInt((diffMs / (1000 * 3600 * 24)));
+      const diffHrs =  parseInt(Math.floor((diffMs % 86400000) / 3600000)); 
+      const minutes =  parseInt(Math.round(((diffMs % 86400000) % 3600000) / 60000));
 
       this.days = days;
       this.hours = diffHrs;
@@ -105,17 +104,11 @@ class AppWelcome extends PolymerElement {
 
     }
   }
-
-  _saveSession() {
-    if (typeof(Storage) !== "undefined") {
-      this._loadCounters();
-    }
-  }
   _logout() {
-    localStorage.setItem(sessionStorage.getItem("id"), new Date());
-    sessionStorage.removeItem("id");
-    this.selected = false;
-    this.dispatchEvent(new CustomEvent("app-button-logout", {
+    localStorage.setItem(sessionStorage.getItem('id'), new Date());
+    sessionStorage.removeItem('id');
+    this.isWelcomePage = false;
+    this.dispatchEvent(new CustomEvent('app-button-logout', {
       bubbles: true,
       composed: true,
       detail: {logout:true}

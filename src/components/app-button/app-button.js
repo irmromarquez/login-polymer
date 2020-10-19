@@ -46,7 +46,7 @@ class appButton extends PolymerElement {
         }
         
       </style>
-      <span class="login-button-content">
+      <span class="login-button-content" role="button">
          <span class="login-button-title">[[title]]</span>
       </span>
     `;
@@ -69,7 +69,7 @@ class appButton extends PolymerElement {
     * @event app-button-click
     */
   _onClick(event) {
-    this.dispatchEvent(new CustomEvent("app-button-click", {
+    this.dispatchEvent(new CustomEvent('app-button-click', {
       bubbles: true,
       composed: true,
       detail: event
