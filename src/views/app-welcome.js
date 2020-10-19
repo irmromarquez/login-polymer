@@ -79,6 +79,7 @@ class AppWelcome extends PolymerElement {
   }
   ready() {
     super.ready();
+    window.onbeforeunload = this._logout;
   }
 
   _loadCounters() {
