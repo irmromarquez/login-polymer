@@ -5,7 +5,6 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
  *
  * @customElement
  * @polymer
- * @demo demo/index.html
  */
 class appButton extends PolymerElement {
   static get template() {

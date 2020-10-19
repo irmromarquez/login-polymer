@@ -22,10 +22,10 @@ class appCounter extends PolymerElement {
         }
         .login-counter-title {
           display: flex;
-          width: var(--login-title-with,100%);
+          width: var(--login-counter-title-with,100%);
           justify-content: center;
-          color: var(--login-title-color,#CBC4C3);
-          font-size: var(--login-title-size,1.5em);
+          color: var(--login-counter-title-color,#CBC4C3);
+          font-size: var(--login-counter-title-size,1.5em);
         }
       </style>
       <div class="login-counter-countainer">

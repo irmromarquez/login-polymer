@@ -1,11 +1,9 @@
 import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 /**
- * `login-button`
- * button to login
+ * `app-service-users`
  *
  * @customElement
  * @polymer
- * @demo demo/index.html
  */
 class appServiceUsers extends PolymerElement {
   static get properties() {
@@ -29,16 +27,9 @@ class appServiceUsers extends PolymerElement {
       },
     };
   }
-   /**
-    * Fired when you click on the button
-    * @event app-button-click
-    */
    _sendRequest() {
       if(this.callRequest) {
-        // se vuelve a poner a false para la siguiente llamada
         this.callRequest = false;
-        // simula la llamda al servidor y se obtendría un true o false para pasar a la siguiente pagina.
-        // en este caso lo que hago es obtener un mock, compruebo si existe el usuario y cambio de página.
         const xmlhttp = this._getxHRequest();
         const params = this.params;
         let findUser;
@@ -51,6 +42,10 @@ class appServiceUsers extends PolymerElement {
               return item.email === objParams.email && item.password === objParams.password;
             });
           }
+          /**
+          * Fired when it is received the request
+          * @event app-service-users-request
+          */
           this.dispatchEvent(new CustomEvent('app-service-users-request', {
             bubbles: true,
             composed: true,
