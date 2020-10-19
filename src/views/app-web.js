@@ -8,6 +8,7 @@ import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-input/paper-input.js';
 import '../components/app-button.js';
 import '../views/app-welcome.js';
+import '../services/app-service-users.js'
 
 /**
  * @customElement
@@ -61,11 +62,12 @@ class AppWeb extends PolymerElement {
             <paper-input label="Password" Value="{{password}}"></paper-input>
           </div>
           <div class="card-actions">
-            <app-button title="login"></app-button>
+            <app-button id="btn-login" title="login"></app-button>
           </div>
         </paper-card>
         <app-welcome page="welcome" selected="{{nextPage}}"></app-welcome>
       </iron-pages>
+      <app-service-users params="{{params}}" call-request="{{call}}" url="{{url}}" type-request="{{typeRequest}}"></app-service-users>
 
     `;
   }
@@ -91,9 +93,26 @@ class AppWeb extends PolymerElement {
         type: Boolean,
         value: false,
       },
-      users: {
+      call: {
+        type: Boolean,
+        value: false
+      },
+      url: {
+        type: String,
+        value: 'src/mock/users.json'
+      },
+      typeRequest: {
+        type: String,
+        value: 'GET'
+      },
+      params: {
         type: Object,
-        value: ''
+        value : function() {
+          return {
+            email: '',
+            password: ''
+          };
+        }
       }
     };
   }
@@ -101,41 +120,28 @@ class AppWeb extends PolymerElement {
     super.ready();
     this.set('route.path', 'login');
     this.addEventListener('app-button-click', this._validateUser);
-    this.addEventListener('app-button-logout', this._logoutPage)
+    this.addEventListener('app-button-logout', this._logoutPage);
+    this.addEventListener('app-service-users-request',this._checkUser);
   }
-  _validateUser() {
-    // simula la llamda al servidor y se obtendría un true o false para pasar a la siguiente pagina.
-    // en este caso lo que hago es obtener un mock, compruebo si existe el usuario y cambio de página.
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        document.getElementsByTagName('app-web')[0].users = JSON.parse(xmlhttp.responseText);
-        document.getElementsByTagName('app-web')[0]._checkUser();
-      } 
-    }
-    xmlhttp.open("GET","src/mock/users.json");
-    xmlhttp.send();
+  _validateUser(evt) {
+     this.params.email = this.email;
+     this.params.password = this.password;
+     if(evt.path[0].id == 'btn-login') {
+      this.call = true;
+     }
   }
-  _checkUser() {
-    var validate = false;
-    for(var i=0; i < this.users.length;i++) {
-      if(this.users[i].email == this.email && this.users[i].password == this.password) {
-        validate = true;
-      }
-    }
-    if(validate) {
-      // limpio los campos antes de cambiar de pagina
-      this.email = '';
-      this.password = '';
+  _checkUser(evt) {
+    this.call = false;
+    if (evt.detail.isValidate) {
+      sessionStorage.setItem("id",evt.detail.id);
       this.nextPage = true;
       this.set('route.path', 'welcome');
+      this.email = '';
+      this.password = '';
     } else {
-      if (this.email != "" && this.password != "") {
-        this.errorText = this.errorText;
-        this.showError = true;
-      }
+      this.showError = true;
     }
-}
+  }
   _logoutPage(event) {
     if(event.detail.logout) {
         this.nextPage = false;

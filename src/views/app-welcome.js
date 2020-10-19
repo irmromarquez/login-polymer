@@ -46,7 +46,7 @@ class AppWelcome extends PolymerElement {
             <app-counter counter="{{seconds}}" text="seconds"></app-counter>
         </div>
         <div class="actions">
-            <app-button class="app-button" title="logout"></app-button>
+            <app-button id="button-welcome" class="app-button" title="logout"></app-button>
         </div>
       </paper-card>
       
@@ -84,11 +84,11 @@ class AppWelcome extends PolymerElement {
 
   _loadCounters() {
     if (this.selected) {
-      if(typeof(localStorage.getItem("conexion"))=='object') {
-        localStorage.setItem("conexion", new Date());
+      if(typeof(localStorage.getItem(sessionStorage.getItem("id")))=='object') {
+        localStorage.setItem(sessionStorage.getItem("id"), new Date());
       }
   
-      var conexionDate = new Date(localStorage.getItem("conexion"));
+      var conexionDate = new Date(localStorage.getItem(sessionStorage.getItem("id")));
       var currentDate =  new Date();
        
       var diffMs = (currentDate - conexionDate);
@@ -112,7 +112,8 @@ class AppWelcome extends PolymerElement {
     }
   }
   _logout() {
-    localStorage.setItem("conexion", new Date());
+    localStorage.setItem(sessionStorage.getItem("id"), new Date());
+    sessionStorage.removeItem("id");
     this.selected = false;
     this.dispatchEvent(new CustomEvent("app-button-logout", {
       bubbles: true,
