@@ -62,7 +62,7 @@ class AppWeb extends PolymerElement {
             <paper-input type="password" label="Password" value="{{password}}"></paper-input>
           </div>
           <div class="card-actions">
-            <app-button id="btn-login" title="login" on-app-button-click="_validateUser"></app-button>
+            <app-button id-button="btn-login" title="login" on-app-button-click="_validateUser"></app-button>
           </div>
         </paper-card>
         <app-welcome page="welcome" is-welcome-page="{{showWelcomePage}}" on-app-button-logout="_logoutPage"></app-welcome>
@@ -119,9 +119,12 @@ class AppWeb extends PolymerElement {
   _validateUser(evt) {
      this.params.email = this.email;
      this.params.password = this.password;
-     if(evt.path[0].id === 'btn-login') {
-      this.call = true;
-     }
+     
+    if(this.email !== '' && this.password !== '') {
+      if(evt.detail.id === 'btn-login') {
+        this.call = true;
+      }
+    }
   }
   _checkUser(evt) {
     this.call = false;

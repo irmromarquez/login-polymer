@@ -56,6 +56,10 @@ class appButton extends PolymerElement {
         type: String,
         value: '',
       },
+      idButton: {
+        type: String,
+        value: ''
+      }
     };
   }
   ready() {
@@ -67,11 +71,11 @@ class appButton extends PolymerElement {
     * Fired when you click on the button
     * @event app-button-click
     */
-  _onClick(event) {
+  _onClick() {
     this.dispatchEvent(new CustomEvent('app-button-click', {
       bubbles: true,
       composed: true,
-      detail: event
+      detail: {id:this.idButton}
     }));
   }
 }

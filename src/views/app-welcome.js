@@ -46,7 +46,7 @@ class AppWelcome extends PolymerElement {
             <app-counter counter="{{seconds}}" text="seconds"></app-counter>
         </div>
         <div class="actions">
-            <app-button id="button-welcome" class="app-button" title="logout" on-app-button-click="_logout"></app-button>
+            <app-button id-button="button-welcome" class="app-button" title="logout" on-app-button-click="_logout"></app-button>
         </div>
       </paper-card>
       
